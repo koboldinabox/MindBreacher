@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <script>
+//  Qui dentro sono salvati tutti i 125 cubi vuoti esistenti e le loro proprietà
 // [x,y,z, type, group]
 // type -> [0 = "not existing", 1 = "external", 2 = "internal", 3 = "goal"]
 // group -> [0 = "none", 1 = "outer rim", 2 = "inner rim", 3 = "center"]
@@ -36,77 +37,126 @@ var memosGrid = [[1,1,1,0,1],[1,1,2,0,1],[1,1,3,0,1],[1,1,4,0,1],[1,1,5,0,1],
 	
 	var colorType = [["red","#c82124"],["blue","#0066ff"],["black","#000000"]];
 	
+	var currentPlayer;
+	
     var canvas;
     var ctx; 
 	
+	var selectCanvas;
+	var selectCtx;
+	
+	//dove abbiamo salvato tutte le memorie 
 	var listaMemo = new Array();
+	
+	//dove abbiamo salvato tutti i collegamenti
 	var linkGrid = new Array();
+	
+	var p1Grid = new Array();
+	var p2Grid = new Array();
+	var p3Grid = new Array();
 
-function drawGrid(w, h) {
+function drawGrid(context) {
 
-	ctx.canvas.width  = w;
-    ctx.canvas.height = h;	
+	clearCanvas(context);
+
+	var w = context.canvas.width;
+	var h = context.canvas.height;
 	
 	var cellWidth = 100;
 	var cellHeight = 100;
 	
     for (x=0;x<=w;x+=cellWidth) {
         for (y=0;y<=h;y+=cellHeight) {
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, h);
-            ctx.stroke();
-            ctx.moveTo(0, y);
-            ctx.lineTo(w, y);
-            ctx.stroke();
+            context.moveTo(x, 0);
+            context.lineTo(x, h);
+            context.stroke();
+            context.moveTo(0, y);
+            context.lineTo(w, y);
+            context.stroke();
         }
     }
-};
+}
+
+function clearCanvas(context){
+
+	context.clearRect(0, 0, canvas.width, canvas.height);
+
+}
+
+function setCanvasSize(w, h, context){
+
+	
+	context.canvas.width  = w;
+    context.canvas.height = h;	
+
+}
+
+function getValue(key, array){
+
+	for(i = 0; i<array.length;i++){
+	
+		if(array[i][0]==key){
+		
+			return array[i][1];
+		
+		}
+	
+	}
+
+}
 	
 function drawView(player){
 	
 	var memW;
 	var memH;
 	
-	drawGrid(500, 500);
+	drawGrid(ctx);
 	
-	for(i=0;i<125;i++){
+	for(i=0;i<listaMemo.length;i++){
 	
 
-		if(memosGrid[i][3]>0){
+		if(memosGrid[listaMemo[i][0]][3]>0 && listaMemo[i][1]==1){
 		
 			if(player==1){
-				memW = memosGrid[i][0];
-				memH = memosGrid[i][1];
+				memW = memosGrid[listaMemo[i][0]][0];
+				memH = memosGrid[listaMemo[i][0]][1];
+				
+				p1Grid.push([memW,memH,listaMemo[i][0]]);
 			}
 			
 			if(player==2){
-				memW = memosGrid[i][1];
-				memH = memosGrid[i][2];
+				memW = memosGrid[listaMemo[i][0]][1];
+				memH = memosGrid[listaMemo[i][0]][2];
+				
+				p2Grid.push([memW,memH,listaMemo[i][0]]);
 			}
 			
 			if(player==3){
-				memW = memosGrid[i][0];
-				memH = memosGrid[i][2];
+				memW = memosGrid[listaMemo[i][0]][0];
+				memH = memosGrid[listaMemo[i][0]][2];
+				
+				p3Grid.push([memW,memH,listaMemo[i][0]]);
 			}
-			
-			drawCircle(memW, memH, i);
+			//			X	Y		box number			color
+			drawCircle(memW, memH, listaMemo[i][0], colorType[memosGrid[listaMemo[i][0]][3]-1][1],ctx);
 			//console.log("memo for player "+ player +" drawn at (" + memH + ", " + memW + ")");
 		}
 	}
+
 }
 
-function drawCircle(memW, memH, index){
+function drawCircle(memW, memH, text, hexColor, context){
 
-	ctx.beginPath();
-	ctx.moveTo(memW*100,((memH-1)*100)+50);
-	ctx.arc((memW*100)-50,((memH-1)*100)+50, 50, 0, 2 * Math.PI);
-	ctx.fillStyle = colorType[memosGrid[i][3]-1][1]; 
-	ctx.fill();
-	ctx.stroke();
-	ctx.font = "30px Arial";
-	ctx.fillStyle = "white";
-	ctx.textAlign = "center";
-	ctx.fillText(index,(memW*100)-50 ,((memH-1)*100)+50);
+	context.beginPath();
+	context.moveTo(memW*100,((memH-1)*100)+50);
+	context.arc((memW*100)-50,((memH-1)*100)+50, 50, 0, 2 * Math.PI);
+	context.fillStyle = hexColor; 
+	context.fill();
+	context.stroke();
+	context.font = "30px Arial";
+	context.fillStyle = "white";
+	context.textAlign = "center";
+	context.fillText(text,(memW*100)-50 ,((memH-1)*100)+50);
 
 }
 
@@ -123,13 +173,22 @@ function populateGrid(amount,type){
 				memosGrid[rand][3]=type;
 				
 				console.log(colorType[type-1][0] +" memo in position " + rand + " activated");
-				listaMemo.push(rand);
+				
+				if(type==1){
+					
+					listaMemo.push([rand,1]);
+					
+				} else {
+					
+					listaMemo.push([rand,0]);
+				
+				}
 				console.log(listaMemo);
 				i++;
 				
 			}
 		}
-}	
+}
 
 function setCenter(){
 		
@@ -137,7 +196,7 @@ function setCenter(){
 	memosGrid[62][3]=3;			
 	console.log("center memo activated");
 
-		}	
+}
 		
 function reset(){
 
@@ -146,6 +205,10 @@ function reset(){
 	memosGrid[i][3] = 0;
  
   }
+  listaMemo = [];
+  p1Grid = [];
+  p2Grid = [];
+  p3Grid = [];
 
 }
 
@@ -208,24 +271,87 @@ window.addEventListener('load', function () {
 
 	canvas = document.getElementById("grid");
 	ctx = canvas.getContext('2d');
-
-	canvas.addEventListener('click', function(e) {
-    getCursorPosition(canvas, e)
-})
+	
+	selectCanvas = document.getElementById("selectGrid");
+	selectCtx = selectCanvas.getContext('2d');
+	
+	setCanvasSize(500,500, ctx);
+	setCanvasSize(500,500, selectCtx);
+	
+	selectCanvas.addEventListener('click', function(e) {
+    selectMemo(selectCtx,selectCanvas, e, getCurrentPlayer())
+});
 
 });
 
-function getCursorPosition(canvas, event) {
-    const rect = canvas.getBoundingClientRect()
+function selectMemo(context,canvas, event, player) {
+
+	
+	clearCanvas(context);
+    
+	const rect = canvas.getBoundingClientRect()
     const x = event.clientX - rect.left
     const y = event.clientY - rect.top
 	
 	var boxX = Math.round((x+50)/100);
 	var boxY = Math.round((y+50)/100);
-		
-	//var memosIndex = ((boxY-1)*5)+boxX;
 	
-  // console.log("x: " + x + " y: " + y + ". The selected box is: ( "+ boxX + ", "+ boxY +"), which is number " + memosIndex);
+	if(getPosition(boxX,boxY,player)){
+	
+	drawCircle(boxX,boxY,"S","#00ff00", selectCtx);
+	
+	console.log("x: " + x + " y: " + y + ". The selected box is: ( "+ boxX + ", "+ boxY +"), which is number " + getPosition(boxX,boxY,player));
+	
+	}
+}
+
+function getPosition(x,y,player){
+
+if(player==1){
+
+	return findInPlayerGrid(p1Grid,x,y);
+
+}
+
+if(player==2){
+
+	return findInPlayerGrid(p2Grid,x,y);
+
+}
+
+if(player==3){
+
+	return findInPlayerGrid(p3Grid,x,y);
+
+}
+
+}
+
+function findInPlayerGrid(playerGrid,x,y){
+
+	for(i=0;i<playerGrid.length;i++){
+		
+		
+			if(playerGrid[i][0]==x && playerGrid[i][1]==y){
+			
+				return playerGrid[i][2];
+			
+			}
+		
+}
+
+}
+
+function getCurrentPlayer(){
+
+return currentPlayer;
+
+}
+
+function setCurrentPlayer(player){
+
+currentPlayer = player;
+
 }
 
 
@@ -233,16 +359,16 @@ function getCursorPosition(canvas, event) {
 </script>
 <html>
 <body>
-<canvas id="grid"></canvas>
-<!-- <div>
- <canvas id="layer1" style="position: z-index: 0;"></canvas>
- <canvas id="layer2" style="position: z-index: 1;"></canvas>
-</div> -->
+<!--<canvas id="grid"></canvas>-->
 
+ <canvas id="grid" 			style="position: absolute; left: 0px; top: 0px; z-index: 0;"></canvas>
+ <canvas id="selectGrid"	style="position: absolute; left: 0px; top: 0px; z-index: 1;"></canvas>
+
+<div id="buttonBar" style="position: absolute; left: 0px; top: 550px;">
 <button onclick='genera();'>Genera Griglia</button>
-<button onclick='drawView(1);'>Giocatore 1</button>
-<button onclick='drawView(2);'>Giocatore 2</button>
-<button onclick='drawView(3);'>Giocatore 3</button>
-
+<button onclick='setCurrentPlayer(1);drawView(1);'>Giocatore 1</button>
+<button onclick='setCurrentPlayer(2);drawView(2);'>Giocatore 2</button>
+<button onclick='setCurrentPlayer(3);drawView(3);'>Giocatore 3</button>
+</div>
 </body>
 </html>
