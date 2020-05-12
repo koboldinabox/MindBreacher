@@ -65,6 +65,8 @@ function drawGrid(context) {
 	var cellWidth = 100;
 	var cellHeight = 100;
 	
+	context.beginPath();
+	
     for (x=0;x<=w;x+=cellWidth) {
         for (y=0;y<=h;y+=cellHeight) {
             context.moveTo(x, 0);
@@ -307,23 +309,23 @@ function selectMemo(context,canvas, event, player) {
 
 function getPosition(x,y,player){
 
-if(player==1){
+	if(player==1){
 
-	return findInPlayerGrid(p1Grid,x,y);
+		return findInPlayerGrid(p1Grid,x,y);
 
-}
+	}
 
-if(player==2){
+	if(player==2){
 
-	return findInPlayerGrid(p2Grid,x,y);
+		return findInPlayerGrid(p2Grid,x,y);
 
-}
+	}
 
-if(player==3){
+	if(player==3){
 
-	return findInPlayerGrid(p3Grid,x,y);
+		return findInPlayerGrid(p3Grid,x,y);
 
-}
+	}
 
 }
 
