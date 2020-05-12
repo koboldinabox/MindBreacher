@@ -298,7 +298,7 @@ function selectMemo(context,canvas, event, player) {
 	var boxX = Math.round((x+50)/100);
 	var boxY = Math.round((y+50)/100);
 	
-	if(getPosition(boxX,boxY,player)){
+	if(!isNaN(getPosition(boxX,boxY,player))){
 	
 	drawCircle(boxX,boxY,"S","#00ff00", selectCtx);
 	
@@ -346,13 +346,13 @@ function findInPlayerGrid(playerGrid,x,y){
 
 function getCurrentPlayer(){
 
-return currentPlayer;
+	return currentPlayer;
 
 }
 
 function setCurrentPlayer(player){
 
-currentPlayer = player;
+	currentPlayer = player;
 
 }
 
