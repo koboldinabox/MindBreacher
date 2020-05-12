@@ -115,7 +115,7 @@ function drawView(player){
 	clearCanvas(selectCtx);
 	drawGrid(ctx);
 	
-	for(i=0;i<listaMemo.length;i++){
+	for(i=listaMemo.length-1;i>=0;i--){
 	
 
 		if(memosGrid[listaMemo[i][0]][3]>0 && listaMemo[i][1]==1){
@@ -140,10 +140,16 @@ function drawView(player){
 				
 				p3Grid.push([memW,memH,listaMemo[i][0]]);
 			}
-			//			X	Y		box number			color
+			//			X	Y		box number			color									context
 			drawCircle(memW, memH, listaMemo[i][0], colorType[memosGrid[listaMemo[i][0]][3]-1][1],ctx);
 			//console.log("memo for player "+ player +" drawn at (" + memH + ", " + memW + ")");
 		}
+	}
+	
+		for(i = 0; i<linkGrid.length;i++){
+	
+		drawLink(linkGrid[i][0],linkGrid[i][1],player);
+		
 	}
 
 }
@@ -177,15 +183,15 @@ function populateGrid(amount,type){
 				
 				console.log(colorType[type-1][0] +" memo in position " + rand + " activated");
 				
-				if(type==1){
+				<!-- if(type==1){ -->
 					
-					listaMemo.push([rand,1]);
+					 listaMemo.push([rand,1,type]); 
 					
-				} else {
+				<!-- } else { -->
 					
-					listaMemo.push([rand,0]);
+					<!-- listaMemo.push([rand,0]); -->
 				
-				}
+				<!-- } -->
 				console.log(listaMemo);
 				i++;
 				
@@ -208,6 +214,7 @@ function reset(){
 	memosGrid[i][3] = 0;
  
   }
+  linkGrid = [];
   listaMemo = [];
   p1Grid = [];
   p2Grid = [];
@@ -221,15 +228,58 @@ function genera(){
 	setCenter();
 	populateGrid(3,2);
 	populateGrid(6,1);
-	creaLink();
+	linkAll();
 
 }
 
-function creaLink(){
+function linkAll(){
+		
+		var toLinkBlue = new Array();
+		var toLinkRed = new Array();
 
-
-
+	for(i=0;i<listaMemo.length;i++){
+		
+		if(listaMemo[i][2]==1){
+		
+			toLinkRed.push([listaMemo[i][0],0]);
+		
+		}
+		
+		
+		if(listaMemo[i][2]==2){
+		
+			toLinkBlue.push([listaMemo[i][0],0]);
+			
+		}
+	
+	}
+	
+	while(toLinkRed.length>0){
+	
+	var randBlue = Math.floor(Math.random() * (toLinkBlue.length-1));
+	var randRed = Math.floor(Math.random() * (toLinkRed.length-1));
+	
+	
+	linkGrid.push([toLinkRed[randRed][0],toLinkBlue[randBlue][0]]);
+	
+	toLinkRed.splice(randRed,1);
+	
+	if(toLinkBlue[randBlue][1]==1){
+	
+		toLinkBlue.splice(randBlue,1);
+		
+	
+	} else {
+	
+		toLinkBlue[randBlue][1]++;
+	}
+	
+	console.log("lista memorie rosse (" + toLinkRed + ")\n lista memorie blu: (" + toLinkBlue + ")");
+	console.log(linkGrid);
+	}
 }
+
+
 
 function drawLink(mem1,mem2, player){
 
@@ -264,8 +314,8 @@ function drawLink(mem1,mem2, player){
 	}
 
 	ctx.beginPath();
-	ctx.moveTo(mem1X+50, mem1Y+50);
-	ctx.lineTo(mem2X+50, mem2X+50);
+	ctx.moveTo((mem1X*100)-50, (mem1Y*100)-50);
+	ctx.lineTo((mem2X*100)-50, (mem2X*100)-50);
 	ctx.stroke();
 
 }
