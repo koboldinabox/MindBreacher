@@ -353,6 +353,13 @@ function getCurrentPlayer(){
 function setCurrentPlayer(player){
 
 	currentPlayer = player;
+	
+	document.getElementById("player1").style.background='none';
+	document.getElementById("player2").style.background='none';
+	document.getElementById("player3").style.background='none';
+	
+	document.getElementById("player"+player).style.background='#00ff00';
+	
 
 }
 
@@ -368,9 +375,9 @@ function setCurrentPlayer(player){
 
 <div id="buttonBar" style="position: absolute; left: 0px; top: 550px;">
 <button onclick='genera();'>Genera Griglia</button>
-<button onclick='setCurrentPlayer(1);drawView(1);'>Giocatore 1</button>
-<button onclick='setCurrentPlayer(2);drawView(2);'>Giocatore 2</button>
-<button onclick='setCurrentPlayer(3);drawView(3);'>Giocatore 3</button>
+<button id="player1" onclick='setCurrentPlayer(1);drawView(1);'>Giocatore 1</button>
+<button id="player2" onclick='setCurrentPlayer(2);drawView(2);'>Giocatore 2</button>
+<button id="player3" onclick='setCurrentPlayer(3);drawView(3);'>Giocatore 3</button>
 </div>
 </body>
 </html>
