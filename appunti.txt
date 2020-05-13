@@ -1,0 +1,66 @@
+ruoli: azione, dettagli, sensazione, spettatore
+
+ricordi blu(rossi): arma(dove,cosa), movente(quando,chi), complice(chi, perché)
+
+
+rosso(arma,dove)-> (soggetto) dove ha nascosto l'arma del delitto?
+					- in casa da qualche parte
+					- in discarica
+					- nel bosco
+					- in fondo al mare
+					- in un bidone della spazzatura
+					- in macchina
+					
+					(sensazione) come ti senti ad aver fatto questo? 
+					- agitato
+					- colpevole
+					- calmo
+					- spiato
+					- nauseato
+					- sicuro
+					
+					(dettagli) quali tracce può aver lasciato?
+					- impronte digitali
+					- impronte delle scarpe
+					- mozzicone di sigaretta
+					- capelli
+					- sangue
+					- un effetto personale
+NOTA: se non l'hai già in una scena precedente, non definire la natura dell'arma (non è questo il ricordo dove farlo)			
+			
+rosso(arma,cosa)-> (soggetto) che tipo di arma hai usato?
+					- una pistola
+					- un coltello
+					- 
+					- un fucile
+					- 
+					- una mazza
+					
+					(sensazione) che sensazione ti da usarla? 
+					- disgusto
+					- potenza
+					- rabbia
+					- frustrazione
+					- odio
+					- freddezza
+					
+					(dettagli) che segni particolari ha l'arma?
+					- è consunto/a
+					- è scadente
+					- ha 
+					- 
+					- 
+					- 
+	
+NOTA: se non l'hai già in una scena precedente, non provare ad abbandonare definitivamente l'arma (non è questo il ricordo dove farlo)
+					
+					
+Procedura:
+- si sceglie un ricordo rosso. Si annuncia il numero. Tutti quelli che lo vedono possono dire "sì, lo vedo" e partecipare. 
+- Chi non partecipa (max 1 persona) diventa spettatore, gli altri si dividono a turno i ruoli rimasti cercando di coprirli tutti il più possibile.
+- Si narra la scena, costruendola con gli elementi proposti dal sistema
+- ad un certo punto, verranno poste delle domande
+- dopo queste scambierete un codice con gli altri due giocatori
+- inserire i codici
+
+
