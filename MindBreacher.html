@@ -115,8 +115,12 @@ function drawView(player){
 	clearCanvas(selectCtx);
 	drawGrid(ctx);
 	
-	for(i=listaMemo.length-1;i>=0;i--){
+	p1Grid =[];
+	p2Grid =[];
+	p3Grid =[];
 	
+	//for(i=listaMemo.length-1;i>=0;i--){
+	for(i=0;i<listaMemo.length;i++){
 
 		if(memosGrid[listaMemo[i][0]][3]>0 && listaMemo[i][1]==1){
 		
@@ -144,6 +148,17 @@ function drawView(player){
 			drawCircle(memW, memH, listaMemo[i][0], colorType[memosGrid[listaMemo[i][0]][3]-1][1],ctx);
 			//console.log("memo for player "+ player +" drawn at (" + memH + ", " + memW + ")");
 		}
+		
+		//per motivi di rotazione delle prospettive, è necessario invertire l'ordine degli elementi per la select
+		//p2Grid.reverse();
+		
+		console.log("p1");
+		console.log(p1Grid);
+		console.log("p2");
+		console.log(p2Grid);
+		console.log("p3");
+		console.log(p3Grid);
+		
 	}
 	
 		for(i = 0; i<linkGrid.length;i++){
@@ -351,7 +366,7 @@ function selectMemo(context,canvas, event, player) {
 	
 	if(!isNaN(getPosition(boxX,boxY,player))){
 	
-	drawCircle(boxX,boxY,"S","#00ff00", selectCtx);
+	drawCircle(boxX,boxY,getPosition(boxX,boxY,player),"#00ff00", selectCtx);
 	
 	console.log("x: " + x + " y: " + y + ". The selected box is: ( "+ boxX + ", "+ boxY +"), which is number " + getPosition(boxX,boxY,player));
 	
@@ -382,7 +397,7 @@ function getPosition(x,y,player){
 
 function findInPlayerGrid(playerGrid,x,y){
 
-	for(i=0;i<playerGrid.length;i++){
+	for(i=playerGrid.length-1;i>=0;i--){
 		
 		
 			if(playerGrid[i][0]==x && playerGrid[i][1]==y){
