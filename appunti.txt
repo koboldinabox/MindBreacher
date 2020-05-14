@@ -45,12 +45,12 @@ rosso(arma,cosa)-> (soggetto) che tipo di arma hai usato?
 					- freddezza
 					
 					(dettagli) che segni particolari ha l'arma?
-					- è consunto/a
+					- è consunta
 					- è scadente
-					- ha 
-					- 
-					- 
-					- 
+					- appartiene alla tua famiglia da generazioni
+					- è molto costosa
+					- pesa troppo
+					- è molto leggera
 	
 NOTA: se non l'hai già in una scena precedente, non provare ad abbandonare definitivamente l'arma (non è questo il ricordo dove farlo)
 					
