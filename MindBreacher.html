@@ -37,12 +37,12 @@ var memosGrid = [[1,1,1,0,1],[1,1,2,0,1],[1,1,3,0,1],[1,1,4,0,1],[1,1,5,0,1],
 	
 	var colorType = [["red","#c82124"],["blue","#0066ff"],["black","#000000"]];
 	
-	var luoghi = ["Giardino della vittima","Parco pubblico","Fogne","Hotel","Collina sulla città","Discarica"];
-	var oggetti = ["pistola","coltello","cravatta","bottiglia di vetro","mattonella","automobile"];
-	var persone = ["Karen Bathen","Helen Winston","Thomas Colterback","Rudolf McKenzie","Tanya Stone","James Castillo"];
-	var luoghi1 = luoghi.slice();
-	var oggetti1 = oggetti.slice();
-	var persone1 = persone.slice();
+	var luoghi = new Array();
+	var oggetti  = new Array();
+	var persone  = new Array();
+	var luoghi1  = new Array();
+	var oggetti1 = new Array();
+	var persone1 = new Array();
 	
 	var currentPlayer;
 	
@@ -61,6 +61,7 @@ var memosGrid = [[1,1,1,0,1],[1,1,2,0,1],[1,1,3,0,1],[1,1,4,0,1],[1,1,5,0,1],
 	var p1Grid = new Array();
 	var p2Grid = new Array();
 	var p3Grid = new Array();
+
 
 function drawGrid(context) {
 
@@ -233,11 +234,21 @@ function reset(){
 	memosGrid[i][3] = 0;
  
   }
-  linkGrid = [];
-  listaMemo = [];
-  p1Grid = [];
-  p2Grid = [];
-  p3Grid = [];
+  
+	linkGrid = [];
+	listaMemo = [];
+	
+	p1Grid = [];
+	p2Grid = [];
+	p3Grid = [];
+	
+	luoghi = [];
+	oggetti = [];
+	persone = [];
+	
+	luoghi1 = [];
+	oggetti1 = [];
+	persone1 = [];
 
 }
 
@@ -257,17 +268,28 @@ function shuffle(a) {
 }
 
 
-function fillElements(){
+function inizializzaElementi(){
 
+	luoghi = ["Giardino della vittima","Parco pubblico","Fogne","Hotel","Collina sulla città","Discarica"];
+	oggetti = ["pistola","coltello","cravatta","bottiglia di vetro","mattonella","automobile"];
+	persone = ["Karen Bathen","Helen Winston","Thomas Colterback","Rudolf McKenzie","Tanya Stone","James Castillo"];
+
+	
 	shuffle(oggetti);	
 	shuffle(persone);	
-	shuffle(luoghi);	
+	shuffle(luoghi);
+	
+	luoghi1 = luoghi.slice();
+	oggetti1 = oggetti.slice();
+	persone1 = persone.slice();
 
-	//reset
-	var luoghi1 = luoghi.slice();
-	var oggetti1 = oggetti.slice();
-	var persone1 = persone.slice();
 
+}
+
+
+function fillElements(){
+
+	inizializzaElementi();	
 
 	oggetti1.splice(0,3);
 	persone1.splice(0,3);
@@ -308,44 +330,45 @@ function fillElements(){
 	
 		for(i=0; i<listaMemo.length;i++){
 		
-		if(listaMemo[i][2]==1){
-		
-			if(!(listaMemo[i][3][0]==="")){
-		
-				listaMemo[i][3][1] = persone[persone.length-1];
-				listaMemo[i][3][2] = luoghi[luoghi.length-1];
+			if(listaMemo[i][2]==1){
+			
+				if(!(listaMemo[i][3][0]==="")){
+			
+					listaMemo[i][3][1] = persone[persone.length-1];
+					listaMemo[i][3][2] = luoghi[luoghi.length-1];
 
-				persone.pop();
-				luoghi.pop();
-				continue;
-				} 
-				
-			if(!(listaMemo[i][3][1]==="")){
-		
-				listaMemo[i][3][0] = oggetti[oggetti.length-1];
-				listaMemo[i][3][2] = luoghi[luoghi.length-1];
-				
-				oggetti.pop();
-				luoghi.pop();
-				continue;
-				}
-				
-			if(!(listaMemo[i][3][2]==="")){
-		
-				listaMemo[i][3][0] = oggetti[oggetti.length-1];
-				listaMemo[i][3][1] = persone[persone.length-1];
-				
-				oggetti.pop();
-				persone.pop();
-				continue;				
+					persone.pop();
+					luoghi.pop();
+					continue;
+					} 
+					
+				if(!(listaMemo[i][3][1]==="")){
+			
+					listaMemo[i][3][0] = oggetti[oggetti.length-1];
+					listaMemo[i][3][2] = luoghi[luoghi.length-1];
+					
+					oggetti.pop();
+					luoghi.pop();
+					continue;
+					}
+					
+				if(!(listaMemo[i][3][2]==="")){
+			
+					listaMemo[i][3][0] = oggetti[oggetti.length-1];
+					listaMemo[i][3][1] = persone[persone.length-1];
+					
+					oggetti.pop();
+					persone.pop();
+					continue;				
+					}
 				}
 			}
-	}
 	
 	
-	<!-- console.log(listaMemo); -->
-	<!-- console.log(oggetti,persone,luoghi); -->
-	<!-- console.log(oggetti1,persone1,luoghi1);	 -->
+	
+	console.log(listaMemo);
+	console.log(oggetti,persone,luoghi);
+	console.log(oggetti1,persone1,luoghi1);	
 	
 	
 
