@@ -270,7 +270,7 @@ function shuffle(a) {
 
 function inizializzaElementi(){
 
-	luoghi = ["Giardino della vittima","Parco pubblico","Fogne","Hotel","Collina sulla città","Discarica"];
+	luoghi = ["Giardino della vittima","Parco pubblico","Fogne","Hotel","Collina","Discarica"];
 	oggetti = ["pistola","coltello","cravatta","bottiglia di vetro","mattonella","automobile"];
 	persone = ["Karen Bathen","Helen Winston","Thomas Colterback","Rudolf McKenzie","Tanya Stone","James Castillo"];
 
@@ -505,10 +505,31 @@ function selectMemo(context,canvas, event, player) {
 	
 	if(!isNaN(getPosition(boxX,boxY,player))){
 	
-	drawCircle(boxX,boxY,getPosition(boxX,boxY,player),"#00ff00", selectCtx);
+		drawCircle(boxX,boxY,getPosition(boxX,boxY,player),"#00ff00", selectCtx);
+		printElements(getPosition(boxX,boxY,player), player);
+		
+		<!-- console.log("x: " + x + " y: " + y + ". The selected box is: ( "+ boxX + ", "+ boxY +"), which is number " + getPosition(boxX,boxY,player)); -->
 	
-	console.log("x: " + x + " y: " + y + ". The selected box is: ( "+ boxX + ", "+ boxY +"), which is number " + getPosition(boxX,boxY,player));
-	
+	}
+}
+
+function printElements(value, player){
+
+	var memoElems = getMemoElems(value);
+
+	document.getElementById("textField").innerHTML = "Elemento di riferimento: " + memoElems[player-1];
+
+}
+
+function getMemoElems(value){
+
+	for(i = 0;i<listaMemo.length;i++){
+
+		if(listaMemo[i][0]==value){
+		
+			return listaMemo[i][3];
+		
+		}
 	}
 }
 
@@ -582,5 +603,6 @@ function setCurrentPlayer(player){
 <button id="player2" onclick='setCurrentPlayer(2);drawView(2);'>Giocatore 2</button>
 <button id="player3" onclick='setCurrentPlayer(3);drawView(3);'>Giocatore 3</button>
 </div>
+<div id="textField"  style="position: absolute; left: 0px; top: 650px;"></div>
 </body>
 </html>
