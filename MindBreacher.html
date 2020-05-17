@@ -1,9 +1,15 @@
 <!DOCTYPE html>
+<script src='http://davidbau.com/encode/seedrandom.js'></script>
 <script>
+
+//http://davidbau.com/archives/2010/01/30/random_seeds_coded_hints_and_quintillions.html
+//per lo script del seedrandom
+
 //  Qui dentro sono salvati tutti i 125 cubi vuoti esistenti e le loro proprietà
 // [x,y,z, type, group]
 // type -> [0 = "not existing", 1 = "external", 2 = "internal", 3 = "goal"]
 // group -> [0 = "none", 1 = "outer rim", 2 = "inner rim", 3 = "center"]
+
 
 var memosGrid = [[1,1,1,0,1],[1,1,2,0,1],[1,1,3,0,1],[1,1,4,0,1],[1,1,5,0,1],
 				 [1,2,1,0,1],[1,2,2,0,0],[1,2,3,0,0],[1,2,4,0,0],[1,2,5,0,1],
@@ -40,13 +46,20 @@ var memosGrid = [[1,1,1,0,1],[1,1,2,0,1],[1,1,3,0,1],[1,1,4,0,1],[1,1,5,0,1],
 	var luoghi = new Array();
 	var oggetti  = new Array();
 	var persone  = new Array();
+	
 	var luoghi1  = new Array();
 	var oggetti1 = new Array();
 	var persone1 = new Array();
 	
+	var oggettoFinale;
+	var	personaFinale;
+	var	luogoFinale;
+	
 	var elemInitP1;
 	var elemInitP2;
 	var elemInitP3;
+	
+	var elementiRivelati = new Array();
 	
 	var currentPlayer;
 	
@@ -55,6 +68,8 @@ var memosGrid = [[1,1,1,0,1],[1,1,2,0,1],[1,1,3,0,1],[1,1,4,0,1],[1,1,5,0,1],
 	
 	var selectCanvas;
 	var selectCtx;
+	
+	var memoSelected;
 	
 	//dove abbiamo salvato tutte le memorie 
 	var listaMemo = new Array();
@@ -131,8 +146,9 @@ function drawView(player){
 	p2Grid =[];
 	p3Grid =[];
 	
-	//for(i=listaMemo.length-1;i>=0;i--){
 	for(i=0;i<listaMemo.length;i++){
+	
+	var bIsDaDisegnare = hasElementoRivelato(i);
 
 		if(memosGrid[listaMemo[i][0]][3]>0 && listaMemo[i][1]==1){
 		
@@ -140,49 +156,71 @@ function drawView(player){
 				memW = memosGrid[listaMemo[i][0]][0];
 				memH = memosGrid[listaMemo[i][0]][1];
 				
-				p1Grid.push([memW,memH,listaMemo[i][0]]);
+				p1Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare]);
 			}
 			
 			if(player==2){
 				memW = memosGrid[listaMemo[i][0]][1];
 				memH = memosGrid[listaMemo[i][0]][2];
 				
-				p2Grid.push([memW,memH,listaMemo[i][0]]);
+				p2Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare]);
 			}
 			
 			if(player==3){
 				memW = memosGrid[listaMemo[i][0]][0];
 				memH = memosGrid[listaMemo[i][0]][2];
 				
-				p3Grid.push([memW,memH,listaMemo[i][0]]);
+				p3Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare]);
 			}
+			
+			if(bIsDaDisegnare){
 			//			X	Y		box number			color									context
 			drawCircle(memW, memH, listaMemo[i][0], colorType[memosGrid[listaMemo[i][0]][3]-1][1],ctx);
 			//console.log("memo for player "+ player +" drawn at (" + memH + ", " + memW + ")");
+			}
 		}
 		
-		//console.log("p1");
-		//console.log(p1Grid);
-		//console.log("p2");
-		//console.log(p2Grid);
-		//console.log("p3");
-		//console.log(p3Grid);
+		console.log("p1");
+		console.log(p1Grid);
+		console.log("p2");
+		console.log(p2Grid);
+		console.log("p3");
+		console.log(p3Grid);
 		
 	}
 	
-		for(i = 0; i<linkGrid.length;i++){
+	//visibile solo per debug
+		<!-- for(i = 0; i<linkGrid.length;i++){ -->
 	
-		drawLink(linkGrid[i][0],linkGrid[i][1],player);
+		<!-- drawLink(linkGrid[i][0],linkGrid[i][1],player); -->
 		
-	}
+	<!-- } -->
 	
 	document.getElementById("textField").innerHTML = getElementoIniziale(player);
+}
+
+function hasElementoRivelato(index){
+
+	var toRet = false;
+
+	for(iRev=0;iRev<elementiRivelati.length;iRev++){
+
+
+		for(iElems=0; iElems<3;iElems++){
+			<!-- toRet = toRet || listaMemo[index][3][iElems]==elementiRivelati[iRev][0]; -->
+			toRet = toRet || listaMemo[index][3][iElems]==elementiRivelati[iRev];
+		}
+		
+}
+
+	return toRet;
+
 }
 
 
 function getElementoIniziale(player){
 
-		if(player == 1) {
+	if(player == 1) {
 	
 		return "Oggetti rilevanti sul luogo del crimine: " + elemInitP1 + "<br></br>";; 
 	
@@ -190,7 +228,7 @@ function getElementoIniziale(player){
 	
 	if(player == 2) {
 	
-		return "Persona contattata per ultime dalla vittima: " + elemInitP2 + "<br></br>";
+		return "Ultima persona contattata dalla vittima prima del decesso: " + elemInitP2 + "<br></br>";
 	
 	}
 	
@@ -229,7 +267,7 @@ function populateGrid(amount,type){
 			
 				memosGrid[rand][3]=type;
 				
-				console.log(colorType[type-1][0] +" memo in position " + rand + " activated");
+				<!-- console.log(colorType[type-1][0] +" memo in position " + rand + " activated"); -->
 				
 				<!-- if(type==1){ -->
 					
@@ -240,7 +278,7 @@ function populateGrid(amount,type){
 					<!-- listaMemo.push([rand,0]); -->
 				
 				<!-- } -->
-				console.log(listaMemo);
+				<!-- console.log(listaMemo); -->
 				i++;
 				
 			}
@@ -251,7 +289,7 @@ function setCenter(){
 		
 			
 	memosGrid[62][3]=3;			
-	console.log("center memo activated");
+	<!-- console.log("center memo activated"); -->
 
 }
 		
@@ -281,6 +319,10 @@ function reset(){
 	elemInitP1 = "";
 	elemInitP2 = "";
 	elemInitP3 = "";
+	
+	elementiRivelati = [];
+	
+	memoSelected = "";
 
 }
 
@@ -311,10 +353,23 @@ function inizializzaElementi(){
 	oggetti1 = oggetti.slice();
 	persone1 = persone.slice();
 	
-	elemInitP1 = oggetti[Math.floor(Math.random() * 2) + 3];
-	elemInitP2 = persone[Math.floor(Math.random() * 2) + 3];
-	elemInitP3 = luoghi[Math.floor(Math.random() * 2) + 3];
-
+	elemInitP1 = oggetti[0];
+	elemInitP2 = persone[0];
+	elemInitP3 =  luoghi[0];
+	
+	<!-- elementiRivelati.push([elemInitP1,1]); -->
+	<!-- elementiRivelati.push([elemInitP2,2]); -->
+	<!-- elementiRivelati.push([elemInitP3,3]); -->
+	
+	elementiRivelati.push(elemInitP1);
+	elementiRivelati.push(elemInitP2);
+	elementiRivelati.push(elemInitP3);
+	
+	console.log(elementiRivelati);
+	console.log(luoghi1);
+	console.log(oggetti1);
+	console.log(persone1);
+	console.log(listaMemo);
 }
 
 
@@ -326,6 +381,11 @@ function fillElements(){
 	oggetti1.splice(0,3);
 	persone1.splice(0,3);
 	luoghi1.splice(0,3);
+	
+	console.log(luoghi1);
+	console.log(oggetti1);
+	console.log(persone1);
+	
 	
 	<!-- console.log(oggetti,persone,luoghi); -->
 	<!-- console.log(oggetti1,persone1,luoghi1); -->
@@ -427,10 +487,38 @@ function fillElements(){
 				}
 		}
 		
+		x1 = 0;
+		for(i3=0; i3<listaMemo.length;i3++){
+		
+			if(listaMemo[i3][2]==2){
+			
+				if(x1 == 0){
+				
+				oggettoFinale = listaMemo[i3][3][x1];
+				
+				}
+				
+				if (x1==1){
+				
+				personaFinale = listaMemo[i3][3][x1];
+				
+				}
+				
+				if (x1==2){
+				
+				luogoFinale = listaMemo[i3][3][x1];
+				
+				}
+				
+				x1++;
+				continue;
+
+				}
+		}
 	
-	console.log(listaMemo);
-	console.log(oggetti,persone,luoghi);
-	console.log(oggetti1,persone1,luoghi1);	
+	<!-- console.log(listaMemo); -->
+	<!-- console.log(oggetti,persone,luoghi); -->
+	<!-- console.log(oggetti1,persone1,luoghi1);	 -->
 
 }
 
@@ -488,8 +576,8 @@ function linkAll(){
 		toLinkBlue[randBlue][1]++;
 	}
 	
-	console.log("lista memorie rosse (" + toLinkRed + ")\n lista memorie blu: (" + toLinkBlue + ")");
-	console.log(linkGrid);
+	<!-- console.log("lista memorie rosse (" + toLinkRed + ")\n lista memorie blu: (" + toLinkBlue + ")"); -->
+	<!-- console.log(linkGrid); -->
 	}
 }
 
@@ -565,8 +653,13 @@ function selectMemo(context,canvas, event, player) {
 	
 	if(!isNaN(getPosition(boxX,boxY,player))){
 	
-		drawCircle(boxX,boxY,getPosition(boxX,boxY,player),"#00ff00", selectCtx);
-		printElements(getPosition(boxX,boxY,player), player);
+		var position = getPosition(boxX,boxY,player);
+		
+		drawCircle(boxX,boxY,position,"#00ff00", selectCtx);
+		printElements(position, player);
+		memoSelected = position;
+		
+		document.getElementById("unlock").style.display = "";
 		
 		<!-- console.log("x: " + x + " y: " + y + ". The selected box is: ( "+ boxX + ", "+ boxY +"), which is number " + getPosition(boxX,boxY,player)); -->
 	
@@ -632,7 +725,7 @@ function findInPlayerGrid(playerGrid,x,y){
 	for(i=playerGrid.length-1;i>=0;i--){
 		
 		
-			if(playerGrid[i][0]==x && playerGrid[i][1]==y){
+			if(playerGrid[i][0]==x && playerGrid[i][1]==y && playerGrid[i][3]){
 			
 				return playerGrid[i][2];
 			
@@ -661,7 +754,122 @@ function setCurrentPlayer(player){
 
 }
 
+function hideUnlock(){
 
+	document.getElementById("unlock").style.display = "none";
+	clearCanvas(selectCtx);
+}
+
+function aggiungiARivelati(manualMemo){
+	
+	var tmpMemo;
+
+	if(manualMemo){
+	 tmpMemo = getMemo(manualMemo);
+	} else {
+	
+	 tmpMemo = getMemo(memoSelected);
+	
+	}
+	
+	if(elementiRivelati.indexOf(tmpMemo[3][0])<0){
+		elementiRivelati.push(tmpMemo[3][0]);
+	}
+	
+	if(elementiRivelati.indexOf(tmpMemo[3][1])<0){
+		elementiRivelati.push(tmpMemo[3][1]);
+	}
+	
+	if(elementiRivelati.indexOf(tmpMemo[3][2])<0){
+		elementiRivelati.push(tmpMemo[3][2]);
+	}
+	
+	hideUnlock();
+	drawView(currentPlayer);
+	
+	abilitaFinale();
+	
+	console.log(elementiRivelati);
+
+}
+
+function svelaElemFinale(){
+
+	if(currentPlayer==1){
+	
+		document.getElementById("finale").innerHTML = "L'arma del delitto è... <b>" + oggettoFinale + "</b>";
+	
+	}
+	
+		if(currentPlayer==2){
+	
+		document.getElementById("finale").innerHTML = "L'assassino è... <b>" + personaFinale + "</b>";
+	
+	}
+	
+		if(currentPlayer==3){
+	
+		document.getElementById("finale").innerHTML = "Il vero luogo del delitto è... <b>" + luogoFinale + "</b>";
+	
+	}
+
+}
+
+function abilitaFinale(){
+
+	if(	oggettoFinale && 
+		personaFinale && 
+		luogoFinale && 
+		elementiRivelati.indexOf(oggettoFinale)>-1 && 
+		elementiRivelati.indexOf(personaFinale)>-1 && 
+		elementiRivelati.indexOf(luogoFinale)>-1){
+		
+		document.getElementById("finale").style.display = "";
+		
+	}
+}
+
+function setSeed(){
+
+	Math.seedrandom(document.getElementById("seed").value);
+
+}
+
+function hideInsertCode(){
+
+	document.getElementById("inserCode").style.display = "none";
+	document.getElementById("buttonBar").style.display = "";
+	
+}
+
+function choosePlayer(){
+
+	document.getElementById("playerPrompt").style.display = "none";
+	
+	document.getElementById("player1").disabled = true;
+	document.getElementById("player2").disabled = true;
+	document.getElementById("player3").disabled = true;
+	
+	document.getElementById("unlockMemo").style.display = "";
+	document.getElementById("memoText").style.display = "";
+}
+
+function sbloccaMemo(){
+
+	var textValue = document.getElementById("memoText").value;
+	
+	if(textValue && getMemo(textValue)){
+	
+		aggiungiARivelati(textValue);
+	
+	} else {
+	
+		alert("inserisci un valore valido per il ricordo da recuperare");
+	
+	}
+	
+	document.getElementById("memoText").value = "";
+}
 
 </script>
 <html>
@@ -669,12 +877,35 @@ function setCurrentPlayer(player){
  <canvas id="grid" 			style="position: absolute; left: 0px; top: 0px; z-index: 0;"></canvas>
  <canvas id="selectGrid"	style="position: absolute; left: 0px; top: 0px; z-index: 1;"></canvas>
 
-<div id="buttonBar" style="position: absolute; left: 0px; top: 550px;">
-<button onclick='genera();'>Genera Griglia</button>
-<button id="player1" onclick='setCurrentPlayer(1);drawView(1);'>Giocatore 1</button>
-<button id="player2" onclick='setCurrentPlayer(2);drawView(2);'>Giocatore 2</button>
-<button id="player3" onclick='setCurrentPlayer(3);drawView(3);'>Giocatore 3</button>
+<div id="buttonBar" style="position: absolute; left: 0px; top: 550px; display: none;">
+<!-- <button onclick='genera();'>Genera Griglia</button> -->
+
+<button id="player1" onclick='setCurrentPlayer(1);choosePlayer();drawView(1);'>Giocatore 1</button>
+<button id="player2" onclick='setCurrentPlayer(2);choosePlayer();drawView(2);'>Giocatore 2</button>
+<button id="player3" onclick='setCurrentPlayer(3);choosePlayer();drawView(3);'>Giocatore 3</button>
+<textarea id="memoText" rows="1" cols = "10" style="display: none;"></textarea>
+<button id="unlockMemo" onclick='sbloccaMemo()' style="display: none;">sblocca ricordo</button>
+<h1 id="playerPrompt"> Scegli quale giocatore sei. Ognuno di voi dovrà essere un giocatore diverso</h1>
+
 </div>
+
+<div id="inserCode" style="position: absolute; left: 0px; top: 550px;">
+
+<h1>scegliete una parola a caso e inserite tutti quanti la STESSA parola in questo campo. Poi premi su inizia.</h1>
+<textarea id="seed" rows="1" cols = "10">prova</textarea>
+<button onclick='setSeed();genera();hideInsertCode();'>inizia!</button>
+</div>
+
 <div id="textField"  style="position: absolute; left: 0px; top: 650px;"></div>
+<div id="unlock"  style="position: absolute; left: 0px; top: 700px; display: none;">
+	<h1>vuoi sbloccare questo ricordo?</h1>
+	<button id="aggiungiARivelati" onclick='aggiungiARivelati()'>Si</button>
+	<button id="hideUnlock" onclick='hideUnlock()'>Non ancora</button>
+</div>
+
+<div id="finale"  style="position: absolute; left: 0px; top: 900px; display: none;">
+	<button id="aggiungiARivelati" onclick='svelaElemFinale()'>Scopri il Finale</button>
+</div>
+
 </body>
 </html>
