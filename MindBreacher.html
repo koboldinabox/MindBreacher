@@ -272,7 +272,7 @@ function inizializzaElementi(){
 
 	luoghi = ["Giardino della vittima","Parco pubblico","Fogne","Hotel","Collina","Discarica"];
 	oggetti = ["pistola","coltello","cravatta","bottiglia di vetro","mattonella","automobile"];
-	persone = ["Karen Bathen","Helen Winston","Thomas Colterback","Rudolf McKenzie","Tanya Stone","James Castillo"];
+	persone = ["Karen Bathen","Helen Winston","Thomas Colterback","Rudolph McKenzie","Tanya Stone","James Castillo"];
 
 	
 	shuffle(oggetti);	
@@ -299,6 +299,7 @@ function fillElements(){
 	<!-- console.log(oggetti1,persone1,luoghi1); -->
 	<!-- console.log(listaMemo); -->
 	
+	//inizializzo i ricordi rossi
 	for(i=0; i<listaMemo.length;i++){
 		
 		if(listaMemo[i][2]==1){
@@ -363,8 +364,37 @@ function fillElements(){
 					}
 				}
 			}
-	
-	
+		
+		var x = 0;
+		//inizializzo i ricordi blu in base ai link con i rossi
+		for(i1=0; i1<listaMemo.length;i1++){
+		
+			if(listaMemo[i1][2]==2){
+			
+				for(i2=0; i2<linkGrid.length;i2++){
+		
+					if(listaMemo[i1][0]==linkGrid[i2][1]){
+							
+							if(!listaMemo[i1][3]){
+								listaMemo[i1][3] = ["","",""];
+							}
+					
+							var tmpElems = getMemoElems(linkGrid[i2][0]);
+							
+							listaMemo[i1][3][x] = tmpElems[x];
+							x++;
+							<!-- if(x==3){ -->
+							
+								<!-- x = 0; -->
+								
+							<!-- } -->
+						}
+					}
+					x=0;
+
+				}
+		}
+		
 	
 	console.log(listaMemo);
 	console.log(oggetti,persone,luoghi);
@@ -528,6 +558,18 @@ function getMemoElems(value){
 		if(listaMemo[i][0]==value){
 		
 			return listaMemo[i][3];
+		
+		}
+	}
+}
+
+function getMemo(value){
+
+	for(i = 0;i<listaMemo.length;i++){
+
+		if(listaMemo[i][0]==value){
+		
+			return listaMemo[i];
 		
 		}
 	}
