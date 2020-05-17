@@ -303,12 +303,50 @@ function fillElements(){
 				continue;
 				}
 			}
-	
 	}
+	
+	
+		for(i=0; i<listaMemo.length;i++){
+		
+		if(listaMemo[i][2]==1){
+		
+			if(!(listaMemo[i][3][0]==="")){
+		
+				listaMemo[i][3][1] = persone[persone.length-1];
+				listaMemo[i][3][2] = luoghi[luoghi.length-1];
+
+				persone.pop();
+				luoghi.pop();
+				continue;
+				} 
+				
+			if(!(listaMemo[i][3][1]==="")){
+		
+				listaMemo[i][3][0] = oggetti[oggetti.length-1];
+				listaMemo[i][3][2] = luoghi[luoghi.length-1];
+				
+				oggetti.pop();
+				luoghi.pop();
+				continue;
+				}
+				
+			if(!(listaMemo[i][3][2]==="")){
+		
+				listaMemo[i][3][0] = oggetti[oggetti.length-1];
+				listaMemo[i][3][1] = persone[persone.length-1];
+				
+				oggetti.pop();
+				persone.pop();
+				continue;				
+				}
+			}
+	}
+	
 	
 	<!-- console.log(listaMemo); -->
 	<!-- console.log(oggetti,persone,luoghi); -->
-	<!-- console.log(oggetti1,persone1,luoghi1); -->
+	<!-- console.log(oggetti1,persone1,luoghi1);	 -->
+	
 	
 
 }
