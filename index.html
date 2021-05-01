@@ -756,13 +756,7 @@ function getCurrentPlayer(){
 function setCurrentPlayer(player){
 
 	currentPlayer = player;
-	
-	document.getElementById("player1").style.background='#F0F0F0';
-	document.getElementById("player2").style.background='#F0F0F0';
-	document.getElementById("player3").style.background='#F0F0F0';
-	document.getElementById("player"+player).style.background='#00ff00';
-	setTimeout(choosePlayer, 1000);
-	
+	setTimeout(choosePlayer, 500);
 
 }
 
@@ -888,64 +882,71 @@ function sbloccaMemo(){
 <html>
 <body>
 	
+<!--Pagina 1: Benvenuto, links, codice-->
+<div class="uk-container uk-container-small uk-position-center" id="inserCode">
+
+	<h1 class="uk-heading-small uk-width-extend uk-text-center">Benvenuto su MindBreacher</h1>
+	<p class="uk-text-lead uk-width-1-2 uk-align-center uk-text-center">Per giocare inventate una parola a caso e inserite tutti quanti la STESSA parola in questo campo. Poi premi su inizia.</p>
+	<input class="uk-input uk-width-1-2 uk-align-center uk-text-center" id="seed" rows="1" cols = "10" placeholder="Inserisci qui il codice"></input>
+	<button class="uk-button uk-button-default uk-align-center uk-width-1-2" type="submit" onclick='setSeed();genera();hideInsertCode();'>Inizia!</button>
+</div>
 	
+
 <!--Pagina 2: Seleziona Giocatore-->
-	<div id="scegli-pg" style="display: none;" >
-		<h1 class="uk-text-center uk-heading-small uk-grid-match">Giocatore  un giocatore!</h1>
+	<div class="uk-container uk-align-center" id="scegli-pg" style="display: none;">
+		<h1 class="uk-text-center uk-heading-small uk-grid-match uk-grid-">Scegli il piano che vuoi giocare!</h1>
 
 		<div class="choose-player-wrapper" uk-grid>
-			<div></div>
-			<div class="uk-card uk-card-default uk-card-hover uk-card-small uk-width-expand@m" onclick='setCurrentPlayer(1);drawView(1);'>
-			  <div class="uk-card-body">
+			<div class="uk-card uk-card-default uk-card-hover uk-card-medium uk-width-expand@m uk-padding" onclick='setCurrentPlayer(1);drawView(1);'>
 				<div class="uk-card-header">
-				  <h3 class="uk-card-title">Piano Frontale</h3>
-				  <p class="uk-text-justify">Il piano sagittale permette di studiare le <span style="color: blue;">oggetti</span> utilizzate dall'assasino. </p>
+					<h3 class="uk-card-title uk-text-center">Piano Frontale</h3>
+					<p class="uk-text-justify uk-text-small">Il piano sagittale permette di studiare le <span style="color: blue;">oggetti</span> utilizzate dall'assasino. </p>
+				  </div>
+				<div class="uk-card-body">
 				</div>
-			  </div>
 		
 			  <div class="uk-card-media-bottom">
 				  <img class="uk-align-center" src="frontale.png">
 			  </div>
 			  <div class="uk-card-footer">
-				<button class="uk-button uk-button-primary uk-align-center uk-width-1-2" id="player1" onclick='setCurrentPlayer(1);drawView(1);'>Giocatore 1</button>
+				<button class="uk-button uk-button-primary uk-align-center" id="player1" onclick='setCurrentPlayer(1);drawView(1);'>Giocatore 1</button>
 			  </div>
 			</div>
 		
 		
-			<div class="uk-card uk-card-default uk-card-hover uk-card-small uk-width-expand@m" onclick='setCurrentPlayer(2);drawView(2);'>
-			  <div class="uk-card-body">
-				<div class="uk-card-header">
-				  <h3 class="uk-card-title">Piano Sagittale</h3>
-				  <p class="uk-text-justify">Il piano frontale permette di studiare le <span style="color: rgb(2, 207, 2);">persone</span> incontrate dall'assasino. </p>
+			<div class="uk-card uk-card-default uk-card-hover uk-card-medium uk-width-expand@m uk-padding" onclick='setCurrentPlayer(2);drawView(2);'>
+			  <div class="uk-card-header">
+				  <h3 class="uk-card-title uk-text-center">Piano Sagittale</h3>
+				  <p class="uk-text-justify uk-text-small">Il piano frontale permette di studiare le <span style="color: rgb(2, 207, 2);">persone</span> incontrate dall'assasino.</p>
+			</div>
+				<div class="uk-card-body">
 				</div>
-			  </div>
 		
 			  <div class="uk-card-media-bottom">
 				  <img class="uk-align-center" src="sagittale.png" width="300" height="300">
 			  </div>
 			  <div class="uk-card-footer">
-				<button class="uk-button uk-button-primary uk-align-center uk-width-1-2" id="player2" onclick='setCurrentPlayer(2);drawView(2);'>Giocatore 2</button>
+				<button class="uk-button uk-button-primary uk-align-center" id="player2" onclick='setCurrentPlayer(2);drawView(2);'>Giocatore 2</button>
 			  </div>
 			</div>
 		
 		
-			<div class="uk-card uk-card-default uk-card-hover uk-card-small uk-width-expand@m" onclick='setCurrentPlayer(3);drawView(3);'>
-			  <div class="uk-card-body">
+			<div class="uk-card uk-card-default uk-card-hover uk-card-medium uk-width-expand@m uk-padding" onclick='setCurrentPlayer(3);drawView(3);'>
 				<div class="uk-card-header">
-				  <h3 class="uk-card-title">Piano Trasversale</h3>
-				  <p class="uk-text-justify">Il piano trasversale permette di studiare i <span style="color: red;">luoghi
-				  </span> visitati dall'assasino.</p>
-				</div>
+					<h3 class="uk-card-title uk-text-center">Piano Trasversale</h3>
+					<p class="uk-text-justify uk-text-small">Il piano trasversale permette di studiare i <span style="color: red;">luoghi
+					</span> visitati dall'assasino.</p>
+				  </div>
+			  <div class="uk-card-body">
 			  </div>
 		
 			  <div class="uk-card-media-bottom">
 				  <img class="uk-align-center" src="trasversale.png" width="300" height="300">
 			  </div>
 			  <div class="uk-card-footer">
-				<button class="uk-button uk-button-primary uk-align-center uk-width-1-2" id="player3" onclick='setCurrentPlayer(3);drawView(3);'>Giocatore 3</button>
+				<button class="uk-button uk-button-primary uk-align-center" id="player3" onclick='setCurrentPlayer(3);drawView(3);'>Giocatore 3</button>
 			  </div>
 			</div>
-			<div></div>
 		  </div>
 	</div>
 
@@ -957,15 +958,6 @@ function sbloccaMemo(){
 
 <textarea id="memoText" rows="1" cols = "10" style="display: none;"></textarea>
 <button id="unlockMemo" onclick='sbloccaMemo()' style="display: none;">sblocca ricordo</button>
-<div id="inserCode" style="position: absolute; left: 0px; top: 550px;">
-
-	<div>
-
-	</div>
-<h1>Giocatore ete una parola a caso e inserite tutti quanti la STESSA parola in questo campo. Poi premi su inizia.</h1>
-<textarea id="seed" rows="1" cols = "10">prova</textarea>
-<button onclick='setSeed();genera();hideInsertCode();'>inizia!</button>
-</div>
 
 <div id="textField"  style="position: absolute; left: 0px; top: 650px;"></div>
 <div id="unlock"  style="position: absolute; left: 0px; top: 700px; display: none;">
