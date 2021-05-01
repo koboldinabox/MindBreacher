@@ -168,26 +168,22 @@ function drawView(player){
 
 		if(memosGrid[listaMemo[i][0]][3]>0 && listaMemo[i][1]==1){
 		
-			if(player==1){
 				memW = memosGrid[listaMemo[i][0]][0];
 				memH = memosGrid[listaMemo[i][0]][1];
 				
 				p1Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare]);
-			}
-			
-			if(player==2){
+
 				memW = memosGrid[listaMemo[i][0]][1];
 				memH = memosGrid[listaMemo[i][0]][2];
 				
 				p2Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare]);
-			}
+
 			
-			if(player==3){
 				memW = memosGrid[listaMemo[i][0]][0];
 				memH = memosGrid[listaMemo[i][0]][2];
 				
 				p3Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare]);
-			}
+
 			
 			if(bIsDaDisegnare){
 			//			X	Y		box number			color									context
