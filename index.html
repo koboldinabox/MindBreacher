@@ -167,37 +167,56 @@ function drawView(player){
 	var bIsDaDisegnare = hasElementoRivelato(i);
 
 		if(memosGrid[listaMemo[i][0]][3]>0 && listaMemo[i][1]==1){
-		
-				memW = memosGrid[listaMemo[i][0]][0];
-				memH = memosGrid[listaMemo[i][0]][1];
-				
-				p1Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare]);
+      
+			memW = memosGrid[listaMemo[i][0]][0];
+			memH = memosGrid[listaMemo[i][0]][1];
+			memD = memosGrid[listaMemo[i][0]][2];
+			p1Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare,memD]);
 
-				memW = memosGrid[listaMemo[i][0]][1];
-				memH = memosGrid[listaMemo[i][0]][2];
-				
-				p2Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare]);
+			memW = memosGrid[listaMemo[i][0]][2];
+			memH = memosGrid[listaMemo[i][0]][1];
+			memD = memosGrid[listaMemo[i][0]][0];
+			p2Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare,memD]);
 
-			
-				memW = memosGrid[listaMemo[i][0]][0];
-				memH = memosGrid[listaMemo[i][0]][2];
-				
-				p3Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare]);
-
-			
-			if(bIsDaDisegnare){
-			//			X	Y		box number			color									context
-			drawCircle(memW, memH, listaMemo[i][0], colorType[memosGrid[listaMemo[i][0]][3]-1][1],ctx);
-			//console.log("memo for player "+ player +" drawn at (" + memH + ", " + memW + ")");
+			memW = memosGrid[listaMemo[i][0]][0];
+			memH = (memosGrid[listaMemo[i][0]][2]+5)%5;
+			memD = memosGrid[listaMemo[i][0]][1];
+			p3Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare,memD]);
 			}
 		}
+		var currGrid;
 		
-		console.log("p1");
-		console.log(p1Grid);
-		console.log("p2");
-		console.log(p2Grid);
-		console.log("p3");
-		console.log(p3Grid);
+		switch(player) {
+		  case 1:
+			currGrid = p1Grid;
+			break;
+		  case 2:
+			currGrid = p2Grid;
+			break;
+		  case 3:
+			currGrid = p3Grid;
+		   break;	
+		}
+		
+		currGrid.sort(memoSort);
+		
+		currGrid.forEach(circle => {
+		
+			if(circle[3]){
+			//			X	Y		box number			color									context
+			drawCircle(circle[0], circle[1], circle[2], colorType[memosGrid[circle[2]][3]-1][1],ctx);
+			//console.log("memo for player "+ player +" drawn at (" + memH + ", " + memW + ")");
+			}
+		});
+			
+			
+		
+		//console.log("p1");
+		//console.log(p1Grid);
+		//console.log("p2");
+		//console.log(p2Grid);
+		//console.log("p3");
+		//console.log(p3Grid);
 		
 	}
 	
@@ -209,6 +228,22 @@ function drawView(player){
 	// } -->
 	
 	document.getElementById("textField").innerHTML = getElementoIniziale(player);
+}
+
+function memoSort(a,b){
+	
+	var depthA = a[4];
+	var depthB = b[4];
+
+  if (depthA < depthB) {
+    return -1;
+  }
+  if (depthA > depthB) {
+    return 1;
+  }
+
+  return 0;
+	
 }
 
 function hasElementoRivelato(index){
@@ -394,9 +429,9 @@ function fillElements(){
 	persone1.splice(0,3);
 	luoghi1.splice(0,3);
 	
-	console.log(luoghi1);
-	console.log(oggetti1);
-	console.log(persone1);
+	//console.log(luoghi1);
+	//console.log(oggetti1);
+	//console.log(persone1);
 	
 	
 	// console.log(oggetti,persone,luoghi); -->
