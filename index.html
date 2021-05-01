@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <script src='seedrandom.js'></script>
+<!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.20/dist/css/uikit.min.css">
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.20/dist/js/uikit.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.6.20/dist/js/uikit-icons.min.js" defer></script>
+<link rel="stylesheet" href="style.css">
 <script>
-<!-- MindBreacher is Copyright 2020 Kobold In a Box -->
-<!-- https://koboldinabox.com/ -->
+// MindBreacher is Copyright 2020 Kobold In a Box -->
+// https://koboldinabox.com/ -->
 
-<!-- questo sistema di supporto è stato realizzato per il Mapemounde 2020 -->
+// questo sistema di supporto è stato realizzato per il Mapemounde 2020 -->
 
 
-<!-- This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.  -->
-<!-- To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/4.0/ or send a letter to Creative Commons,  -->
-<!-- PO Box 1866, Mountain View, CA 94042, USA. -->
+// This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.  -->
+// To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/4.0/ or send a letter to Creative Commons,  -->
+// PO Box 1866, Mountain View, CA 94042, USA. -->
 
-<!-- seedrandom.js is Copyright 2014 David Bau. -->
+// seedrandom.js is Copyright 2014 David Bau. -->
 //http://davidbau.com/archives/2010/01/30/random_seeds_coded_hints_and_quintillions.html
 
 
@@ -200,11 +206,11 @@ function drawView(player){
 	}
 	
 	//visibile solo per debug
-		<!-- for(i = 0; i<linkGrid.length;i++){ -->
+		// for(i = 0; i<linkGrid.length;i++){ -->
 	
-		<!-- drawLink(linkGrid[i][0],linkGrid[i][1],player); -->
+		// drawLink(linkGrid[i][0],linkGrid[i][1],player); -->
 		
-	<!-- } -->
+	// } -->
 	
 	document.getElementById("textField").innerHTML = getElementoIniziale(player);
 }
@@ -217,7 +223,7 @@ function hasElementoRivelato(index){
 
 
 		for(iElems=0; iElems<3;iElems++){
-			<!-- toRet = toRet || listaMemo[index][3][iElems]==elementiRivelati[iRev][0]; -->
+			// toRet = toRet || listaMemo[index][3][iElems]==elementiRivelati[iRev][0]; -->
 			toRet = toRet || listaMemo[index][3][iElems]==elementiRivelati[iRev];
 		}
 		
@@ -277,18 +283,18 @@ function populateGrid(amount,type){
 			
 				memosGrid[rand][3]=type;
 				
-				<!-- console.log(colorType[type-1][0] +" memo in position " + rand + " activated"); -->
+				// console.log(colorType[type-1][0] +" memo in position " + rand + " activated"); -->
 				
-				<!-- if(type==1){ -->
+				// if(type==1){ -->
 					
 					 listaMemo.push([rand,1,type]); 
 					
-				<!-- } else { -->
+				// } else { -->
 					
-					<!-- listaMemo.push([rand,0]); -->
+					// listaMemo.push([rand,0]); -->
 				
-				<!-- } -->
-				<!-- console.log(listaMemo); -->
+				// } -->
+				// console.log(listaMemo); -->
 				i++;
 				
 			}
@@ -299,7 +305,7 @@ function setCenter(){
 		
 			
 	memosGrid[62][3]=3;			
-	<!-- console.log("center memo activated"); -->
+	// console.log("center memo activated"); -->
 
 }
 		
@@ -367,9 +373,9 @@ function inizializzaElementi(){
 	elemInitP2 = persone[0];
 	elemInitP3 =  luoghi[0];
 	
-	<!-- elementiRivelati.push([elemInitP1,1]); -->
-	<!-- elementiRivelati.push([elemInitP2,2]); -->
-	<!-- elementiRivelati.push([elemInitP3,3]); -->
+	// elementiRivelati.push([elemInitP1,1]); -->
+	// elementiRivelati.push([elemInitP2,2]); -->
+	// elementiRivelati.push([elemInitP3,3]); -->
 	
 	elementiRivelati.push(elemInitP1);
 	elementiRivelati.push(elemInitP2);
@@ -397,9 +403,9 @@ function fillElements(){
 	console.log(persone1);
 	
 	
-	<!-- console.log(oggetti,persone,luoghi); -->
-	<!-- console.log(oggetti1,persone1,luoghi1); -->
-	<!-- console.log(listaMemo); -->
+	// console.log(oggetti,persone,luoghi); -->
+	// console.log(oggetti1,persone1,luoghi1); -->
+	// console.log(listaMemo); -->
 	
 	//inizializzo i ricordi rossi
 	for(i=0; i<listaMemo.length;i++){
@@ -485,11 +491,11 @@ function fillElements(){
 							
 							listaMemo[i1][3][x] = tmpElems[x];
 							x++;
-							<!-- if(x==3){ -->
+							// if(x==3){ -->
 							
-								<!-- x = 0; -->
+								// x = 0; -->
 								
-							<!-- } -->
+							// } -->
 						}
 					}
 					x=0;
@@ -526,9 +532,9 @@ function fillElements(){
 				}
 		}
 	
-	<!-- console.log(listaMemo); -->
-	<!-- console.log(oggetti,persone,luoghi); -->
-	<!-- console.log(oggetti1,persone1,luoghi1);	 -->
+	// console.log(listaMemo); -->
+	// console.log(oggetti,persone,luoghi); -->
+	// console.log(oggetti1,persone1,luoghi1);	 -->
 
 }
 
@@ -586,8 +592,8 @@ function linkAll(){
 		toLinkBlue[randBlue][1]++;
 	}
 	
-	<!-- console.log("lista memorie rosse (" + toLinkRed + ")\n lista memorie blu: (" + toLinkBlue + ")"); -->
-	<!-- console.log(linkGrid); -->
+	// console.log("lista memorie rosse (" + toLinkRed + ")\n lista memorie blu: (" + toLinkBlue + ")"); -->
+	// console.log(linkGrid); -->
 	}
 }
 
@@ -671,7 +677,7 @@ function selectMemo(context,canvas, event, player) {
 		
 		document.getElementById("unlock").style.display = "";
 		
-		<!-- console.log("x: " + x + " y: " + y + ". The selected box is: ( "+ boxX + ", "+ boxY +"), which is number " + getPosition(boxX,boxY,player)); -->
+		// console.log("x: " + x + " y: " + y + ". The selected box is: ( "+ boxX + ", "+ boxY +"), which is number " + getPosition(boxX,boxY,player)); -->
 	
 	}
 }
@@ -758,8 +764,8 @@ function setCurrentPlayer(player){
 	document.getElementById("player1").style.background='#F0F0F0';
 	document.getElementById("player2").style.background='#F0F0F0';
 	document.getElementById("player3").style.background='#F0F0F0';
-	
 	document.getElementById("player"+player).style.background='#00ff00';
+	setTimeout(choosePlayer, 1000);
 	
 
 }
@@ -848,20 +854,21 @@ function setSeed(){
 function hideInsertCode(){
 
 	document.getElementById("inserCode").style.display = "none";
-	document.getElementById("buttonBar").style.display = "";
+	document.getElementById("scegli-pg").style.display = "";
 	
 }
 
 function choosePlayer(){
 
-	document.getElementById("playerPrompt").style.display = "none";
 	
+	document.getElementById("grid").style.display = "";
+	document.getElementById("selectGrid").style.display = "";
 	document.getElementById("player1").disabled = true;
 	document.getElementById("player2").disabled = true;
 	document.getElementById("player3").disabled = true;
-	
 	document.getElementById("unlockMemo").style.display = "";
 	document.getElementById("memoText").style.display = "";
+	document.getElementById("scegli-pg").style.display = "none"
 }
 
 function sbloccaMemo(){
@@ -884,24 +891,82 @@ function sbloccaMemo(){
 </script>
 <html>
 <body>
- <canvas id="grid" 			style="position: absolute; left: 0px; top: 0px; z-index: 0;"></canvas>
- <canvas id="selectGrid"	style="position: absolute; left: 0px; top: 0px; z-index: 1;"></canvas>
+	
+	
+<!--Pagina 2: Seleziona Giocatore-->
+	<div id="scegli-pg" style="display: none;" >
+		<h1 class="uk-text-center uk-heading-small uk-grid-match">Giocatore  un giocatore!</h1>
 
-<div id="buttonBar" style="position: absolute; left: 0px; top: 550px; display: none;">
-<!-- <button onclick='genera();'>Genera Griglia</button> -->
+		<div class="choose-player-wrapper" uk-grid>
+			<div></div>
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small uk-width-expand@m" onclick='setCurrentPlayer(1);drawView(1);'>
+			  <div class="uk-card-body">
+				<div class="uk-card-header">
+				  <h3 class="uk-card-title">Piano Frontale</h3>
+				  <p class="uk-text-justify">Il piano sagittale permette di studiare le <span style="color: blue;">oggetti</span> utilizzate dall'assasino. </p>
+				</div>
+			  </div>
+		
+			  <div class="uk-card-media-bottom">
+				  <img class="uk-align-center" src="frontale.png">
+			  </div>
+			  <div class="uk-card-footer">
+				<button class="uk-button uk-button-primary uk-align-center uk-width-1-2" id="player1" onclick='setCurrentPlayer(1);drawView(1);'>Giocatore 1</button>
+			  </div>
+			</div>
+		
+		
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small uk-width-expand@m" onclick='setCurrentPlayer(2);drawView(2);'>
+			  <div class="uk-card-body">
+				<div class="uk-card-header">
+				  <h3 class="uk-card-title">Piano Sagittale</h3>
+				  <p class="uk-text-justify">Il piano frontale permette di studiare le <span style="color: rgb(2, 207, 2);">persone</span> incontrate dall'assasino. </p>
+				</div>
+			  </div>
+		
+			  <div class="uk-card-media-bottom">
+				  <img class="uk-align-center" src="sagittale.png" width="300" height="300">
+			  </div>
+			  <div class="uk-card-footer">
+				<button class="uk-button uk-button-primary uk-align-center uk-width-1-2" id="player2" onclick='setCurrentPlayer(2);drawView(2);'>Giocatore 2</button>
+			  </div>
+			</div>
+		
+		
+			<div class="uk-card uk-card-default uk-card-hover uk-card-small uk-width-expand@m" onclick='setCurrentPlayer(3);drawView(3);'>
+			  <div class="uk-card-body">
+				<div class="uk-card-header">
+				  <h3 class="uk-card-title">Piano Trasversale</h3>
+				  <p class="uk-text-justify">Il piano trasversale permette di studiare i <span style="color: red;">luoghi
+				  </span> visitati dall'assasino.</p>
+				</div>
+			  </div>
+		
+			  <div class="uk-card-media-bottom">
+				  <img class="uk-align-center" src="trasversale.png" width="300" height="300">
+			  </div>
+			  <div class="uk-card-footer">
+				<button class="uk-button uk-button-primary uk-align-center uk-width-1-2" id="player3" onclick='setCurrentPlayer(3);drawView(3);'>Giocatore 3</button>
+			  </div>
+			</div>
+			<div></div>
+		  </div>
+	</div>
 
-<button id="player1" onclick='setCurrentPlayer(1);choosePlayer();drawView(1);'>Giocatore 1</button>
-<button id="player2" onclick='setCurrentPlayer(2);choosePlayer();drawView(2);'>Giocatore 2</button>
-<button id="player3" onclick='setCurrentPlayer(3);choosePlayer();drawView(3);'>Giocatore 3</button>
+
+	  
+<!--Pagina 3: -->
+<canvas id="grid" 			style="display: none;"></canvas>
+<canvas id="selectGrid"		style="display: none;"></canvas>
+
 <textarea id="memoText" rows="1" cols = "10" style="display: none;"></textarea>
 <button id="unlockMemo" onclick='sbloccaMemo()' style="display: none;">sblocca ricordo</button>
-<h1 id="playerPrompt"> Scegli quale giocatore sei. Ognuno di voi dovrà essere un giocatore diverso</h1>
-
-</div>
-
 <div id="inserCode" style="position: absolute; left: 0px; top: 550px;">
 
-<h1>scegliete una parola a caso e inserite tutti quanti la STESSA parola in questo campo. Poi premi su inizia.</h1>
+	<div>
+
+	</div>
+<h1>Giocatore ete una parola a caso e inserite tutti quanti la STESSA parola in questo campo. Poi premi su inizia.</h1>
 <textarea id="seed" rows="1" cols = "10">prova</textarea>
 <button onclick='setSeed();genera();hideInsertCode();'>inizia!</button>
 </div>

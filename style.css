@@ -1,0 +1,30 @@
+html, body{
+    position:absolute;
+    top: 0;
+    margin: 0;
+    height:100%;
+    width: 100%;
+}
+@media screen and (min-width: 960px) {
+    #scegli-pg{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+}
+}
+
+.choose-player-wrapper > div{
+    margin: 10px;
+}
+#grid{
+    position: absolute;
+    left: 0px; 
+    top: 0px; 
+    z-index: 0;
+}
+#selectGrid{
+    position: absolute; 
+    left: 0px; 
+    top: 0px; 
+    z-index: 1;
+}
