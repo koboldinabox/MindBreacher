@@ -149,6 +149,23 @@ function getValue(key, array){
 	}
 
 }
+
+function toDraw(){
+
+	var toRet = [];
+	
+	for(i=0;i<listaMemo.length;i++){
+	
+		if(hasElementoRivelato(i)){
+	
+			toRet.push(listaMemo[i][0]);
+		
+		}
+	}
+	
+	return toRet;
+	
+}
 	
 function drawView(player){
 	
@@ -183,7 +200,7 @@ function drawView(player){
 			memD = memosGrid[listaMemo[i][0]][1];
 			p3Grid.push([memW,memH,listaMemo[i][0],bIsDaDisegnare,memD]);
 			}
-		}
+		
 		var currGrid;
 		
 		switch(player) {
@@ -209,8 +226,6 @@ function drawView(player){
 			}
 		});
 			
-			
-		
 		//console.log("p1");
 		//console.log(p1Grid);
 		//console.log("p2");
@@ -572,12 +587,14 @@ function fillElements(){
 
 function genera(){
 
+	setSeed()
 	reset();
 	setCenter();
 	populateGrid(3,2);
 	populateGrid(9,1);
 	linkAll();
 	fillElements();
+	hideInsertCode();
 
 }
 
@@ -791,7 +808,7 @@ function getCurrentPlayer(){
 function setCurrentPlayer(player){
 
 	currentPlayer = player;
-	setTimeout(choosePlayer, 500);
+	choosePlayer();
 
 }
 
@@ -871,8 +888,12 @@ function abilitaFinale(){
 }
 
 function setSeed(){
-
-	Math.seedrandom(document.getElementById("seed").value);
+	if (document.getElementById("seed").value){
+		Math.seedrandom(document.getElementById("seed").value);
+	}
+	else{
+		Math.seedrandom('prova');
+	}
 
 }
 
@@ -923,7 +944,7 @@ function sbloccaMemo(){
 	<h1 class="uk-heading-small uk-width-extend uk-text-center">Benvenuto su MindBreacher</h1>
 	<p class="uk-text-lead uk-width-1-2 uk-align-center uk-text-center">Per giocare inventate una parola a caso e inserite tutti quanti la STESSA parola in questo campo. Poi premi su inizia.</p>
 	<input class="uk-input uk-width-1-2 uk-align-center uk-text-center" id="seed" rows="1" cols = "10" placeholder="Inserisci qui il codice"></input>
-	<button class="uk-button uk-button-default uk-align-center uk-width-1-2" type="submit" onclick='setSeed();genera();hideInsertCode();'>Inizia!</button>
+	<button class="uk-button uk-button-default uk-align-center uk-width-1-2" type="submit" onclick='genera()'>Inizia!</button>
 </div>
 	
 
@@ -985,14 +1006,15 @@ function sbloccaMemo(){
 		  </div>
 	</div>
 
-
 	  
-<!--Pagina 3: -->
+<!--Pagina 3: Sessione di gioco-->
 <canvas id="grid" 			style="display: none;"></canvas>
 <canvas id="selectGrid"		style="display: none;"></canvas>
 
-<textarea id="memoText" rows="1" cols = "10" style="display: none;"></textarea>
-<button id="unlockMemo" onclick='sbloccaMemo()' style="display: none;">sblocca ricordo</button>
+<div style="position: absolute; top: 600px;">
+		<textarea id="memoText" rows="1" cols = "10" style="display: none;"></textarea>
+		<button id="unlockMemo" onclick='sbloccaMemo()' style="display: none;">sblocca ricordo</button>
+</div> 
 
 <div id="textField"  style="position: absolute; left: 0px; top: 650px;"></div>
 <div id="unlock"  style="position: absolute; left: 0px; top: 700px; display: none;">
@@ -1001,6 +1023,7 @@ function sbloccaMemo(){
 	<button id="hideUnlock" onclick='hideUnlock()'>Non ancora</button>
 </div>
 
+<!--Pagina 4: Vittoria-->
 <div id="finale"  style="position: absolute; left: 0px; top: 900px; display: none;">
 	<button id="aggiungiARivelati" onclick='svelaElemFinale()'>Scopri il Finale</button>
 </div>
