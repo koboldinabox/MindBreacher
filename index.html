@@ -319,31 +319,28 @@ function drawCircle(memW, memH, text, hexColor, context){
 
 function populateGrid(amount,type){
 		
-		var i = 0;
-		
-		while(i<amount) {
-		
-		var rand = Math.floor(Math.random() * 124);
+		var arrayConstructor = new Array()
 
-			if(memosGrid[rand][3]==0 && memosGrid[rand][4] == type){
-			
-				memosGrid[rand][3]=type;
+		memosGrid.forEach(el => {
+			if (el[4] == type){
+				arrayConstructor.push(memosGrid.indexOf(el))
+			}
+		});
+
+		
+		for(let i = 0; i<amount; i++) {
+		
+		let rand = Math.floor(Math.random() * arrayConstructor.length);
+
+			if(memosGrid[arrayConstructor[rand]][3] == 0){
 				
-				// console.log(colorType[type-1][0] +" memo in position " + rand + " activated"); -->
+				memosGrid[arrayConstructor[rand]][3]=type;
 				
-				// if(type==1){ -->
-					
-					 listaMemo.push([rand,1,type]); 
-					
-				// } else { -->
-					
-					// listaMemo.push([rand,0]); -->
-				
-				// } -->
-				// console.log(listaMemo); -->
-				i++;
+				listaMemo.push([arrayConstructor[rand],1,type]); 
 				
 			}
+		
+		arrayConstructor.splice(rand, 1);
 		}
 }
 
@@ -427,11 +424,11 @@ function inizializzaElementi(){
 	elementiRivelati.push(elemInitP2);
 	elementiRivelati.push(elemInitP3);
 	
-	console.log(elementiRivelati);
+	/*console.log(elementiRivelati);
 	console.log(luoghi1);
 	console.log(oggetti1);
 	console.log(persone1);
-	console.log(listaMemo);
+	console.log(listaMemo);*/
 }
 
 
@@ -577,19 +574,22 @@ function fillElements(){
 
 				}
 		}
-	
-	// console.log(listaMemo); -->
-	// console.log(oggetti,persone,luoghi); -->
-	// console.log(oggetti1,persone1,luoghi1);	 -->
+	/*aggiungo la lista all'elemento centro
+	filtro listaMemo e trovo l'elemento centrale (il terzo elemento di ogni blocco è necessariamente il type)
+	cerco l'indice dell'unico elemento dell'array "filtro"nella listaMemo
+	accedo all'elemento della listaMemo attraverso l'indice appena calcolato
+	aggiungo un array con ogg, pers, luogo finale	
+	*/
+	listaMemo[listaMemo.indexOf(listaMemo.filter(el=>{return el[2]==3})[0])].push([oggettoFinale, personaFinale, luogoFinale])
 
 }
 
 
 function genera(){
 
-	setSeed()
+	setSeed();
 	reset();
-	setCenter();
+	//setCenter();
 	populateGrid(1,3);
 	populateGrid(3,2);
 	populateGrid(9,1);
